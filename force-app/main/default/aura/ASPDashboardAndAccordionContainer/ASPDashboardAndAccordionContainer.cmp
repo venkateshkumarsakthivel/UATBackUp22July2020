@@ -1,0 +1,63 @@
+<!-- c:ASPDashboardAndAccordionContainer -->
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="ASPDashboardAndAccordionContainerCon">
+    <aura:attribute name="showDVDDownTime" type="Boolean" default="false"/>
+    <aura:attribute name="dvdDownTimeMessage" type="String" default=""/>
+    <aura:attribute name="showInfo" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    
+    <aura:if isTrue="{!$Browser.isPhone}">
+        <!-- Mobile View-->
+        <div class="container">
+            <aura:if isTrue="{!not(v.showDVDDownTime)}">
+                
+                <aura:if isTrue="{!v.showInfo}">
+                    <div aura:id="card_container" name="card_container" class="slds-align_absolute-center">              
+                        <lightning:card title="Information" iconName="action:info" class="info slds-m-bottom_small ">
+                            <aura:set attribute="actions">
+                                <lightning:buttonIcon iconName="utility:close" size="large" variant="bare-inverse" alternativeText="Close" onclick="{!c.handleRemove}"/>
+                            </aura:set>
+                            <p class="slds-p-horizontal_small">
+                                {!$Label.c.Limited_Mobile_Function_Message}
+                            </p>
+                        </lightning:card>
+                    </div> 
+                </aura:if>
+                <!--<c:AccordianNavigation />
+                <c:ASPDashboard /> -->
+            </aura:if>
+            <aura:if isTrue="{!v.showDVDDownTime}">
+                <br/>
+                <br/>
+                <img src="{!$Resource.P2P_PortalLogo}"/>
+                <br/>
+                <br/>
+                <div style="font-weight:bold;font-size:16px;color: #1a3278;">
+                    <aura:unescapedHtml value="{!v.dvdDownTimeMessage}"/>   
+                </div>                
+            </aura:if>
+        </div>
+        <aura:set attribute="else">
+            <!-- Desktop View-->
+            <div class="container">  
+                <aura:if isTrue="{!not(v.showDVDDownTime)}">
+                    <div class="navigation" style="width:14%;Text-align:center;float:left;margin-top:0px;">
+                        <c:AccordianNavigation />
+                    </div>
+                    <div class="slds-grid dashboard slds-text-align_right">
+                        <c:ASPDashboard />
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.showDVDDownTime}">
+                    <br/>
+                    <br/>
+                    <img src="{!$Resource.P2P_PortalLogo}"/>
+                    <br/>
+                    <br/>
+                    <div style="font-weight:bold;font-size:16px;color: #1a3278;">
+                        <aura:unescapedHtml value="{!v.dvdDownTimeMessage}"/>   
+                    </div>
+                </aura:if>                
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

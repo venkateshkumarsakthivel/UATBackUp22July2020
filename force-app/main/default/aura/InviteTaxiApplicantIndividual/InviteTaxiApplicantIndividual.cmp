@@ -1,0 +1,30 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global"  controller="InviteTaxiApplicantController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+     <aura:attribute name="isModalError" type="boolean" default="false"/>
+    <aura:attribute name="isBidupdatesuccess" type="boolean" default="false"/>
+    <aura:attribute name="getBidOfferedCount" type="string" default="0"/>
+    
+   
+     <aura:if isTrue="{!v.isModalOpen}">
+
+                    <aura:if isTrue="{!v.isBidupdatesuccess}">
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Invitation successfully sent!
+                            </b>
+                        </p>
+                    </div>
+                     <aura:set attribute="else">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Failed to send invite. Please contact System Adminstrator for more details.
+                            </b>
+                        </p>
+                    </div>
+                     </aura:set>
+                    </aura:if> 
+               <aura:set attribute="else">
+                   <lightning:button variant="brand" label="Invite Tender Application" title="Brand action" onclick="{! c.InviteApplicant }" />
+          </aura:set>
+        </aura:if>
+
+</aura:component>

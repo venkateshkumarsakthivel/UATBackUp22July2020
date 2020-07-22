@@ -1,0 +1,22 @@
+h2 {
+  color: Red;
+}
+
+@media print {
+  .THIS.divToPrint {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .THIS.hideInPrint {
+    display: none;
+  }
+}

@@ -1,0 +1,88 @@
+<!--
+  @File Name          : taxiTenderJointHolderList.html
+  @Description        : 
+  @Author             : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Group              : 
+  @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Last Modified On   : 4/20/2020, 11:01:28 AM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    4/20/2020   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+-->
+<template>
+  <!-- <lightning-input label="Priority Only" type="checkbox" onchange={handleCheckboxChange}></lightning-input> -->
+
+  <lightning-card
+    title={jointHolderNumber}
+    variant="base"
+    if:true={jointHolder}
+    key={jointHolder.key}
+    class="slds-p-around_xx-small"
+  >
+    <template if:false={makereadonly}>
+      <lightning-button
+        label="Close "
+        icon-name="utility:close"
+        icon-position="right"
+        variant="bare"
+        alternative-text="Close window"
+        onclick={handleclose}
+        class="slds-m-right_xx-small slds-float--right"
+      >
+      </lightning-button>
+    </template>
+
+    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+      <lightning-combobox
+        label="Joint Holder Type"
+        name="type"
+        value={type}
+        placeholder="Please Select"
+        options={options}
+        onchange={handleChange}
+        required
+        read-only={makereadonly}
+        class="getcolor"
+      >
+      </lightning-combobox>
+    </div>
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+        <lightning-input
+          label="Name"
+          name="name"
+          value={name}
+          onchange={handleChange}
+          read-only={makereadonly}
+          required
+          class="getcolor"
+        >
+        </lightning-input>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+        <lightning-input
+          label="Email"
+          name="email"
+          value={email}
+          onchange={handleChange}
+          read-only={makereadonly}
+          type="email"
+          class="getcolor"
+        >
+        </lightning-input>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+        <lightning-input
+          label="Phone"
+          name="phone"
+          value={phone}
+          onchange={handleChange}
+          read-only={makereadonly}
+          class="getcolor"
+          type="number"
+        >
+        </lightning-input>
+      </div>
+    </div>
+  </lightning-card>
+</template>

@@ -1,0 +1,39 @@
+<template>
+  <lightning-card>
+    <ul>
+      <h2>
+        <div class="slds-text-color_weak">
+          <li>
+            You have successfully submitted a tender for a {tenderyears} Taxi
+            License for the Sydney Metropolitan Distric: Rft Number TfNSW
+            2017/077
+          </li>
+          <li>Tender Number:{bidname}</li>
+          <li>
+            In the name of {bidfirstname} {bidlastname} For the Annual Licence
+            Fee of {bidamount} AUD
+          </li>
+          <li>Your transaction ID is TL-115</li>
+        </div>
+        <li><strong>Your Contact in this matter is </strong></li>
+        <div class="slds-list_dotted">
+          <li>Contact Email:{bidemail}</li>
+          <li>Contact Address : {bidaddress}</li>
+          <li>Business House Phone : {bidbusinessphone}</li>
+        </div>
+        <li>
+          Please keep a copy of these details for your records and if you need
+          to contact us, call 131 727, quouting the tender number (RITNumber)
+          and the Transaction ID.
+        </li>
+      </h2>
+    </ul>
+  </lightning-card>
+
+  <lightning-card>
+    <div class="slds-no-print">
+      <lightning-button label="Print" onclick={handlePrint} variant="brand">
+      </lightning-button>
+    </div>
+  </lightning-card>
+</template>

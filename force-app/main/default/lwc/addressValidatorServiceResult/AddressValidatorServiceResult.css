@@ -1,0 +1,11 @@
+.list-title {
+   color: navy;
+   font-color: navy !important;
+
+}
+
+.list-details {
+  font-size: smaller;
+  font-weight: lighter;
+  font-color: navy;
+}

@@ -1,0 +1,11 @@
+.THIS {
+}
+
+.THIS .remove_info{
+    display:none;
+}
+.THIS .info{
+    background-color:#003577;
+    color:#FFF;
+    text-align:justify;
+}

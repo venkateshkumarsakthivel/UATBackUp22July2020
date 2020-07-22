@@ -1,0 +1,24 @@
+<template>
+  <lightning-card>
+       <h2>
+    Please Note your applicaiton ID:{tenderBidNo}
+
+    Unfortunately, your applicaiton cannot proceed without payment of the applicaition fee of ${tenderBidAmount} AUD (GST Exempt) by Visa or Mastercard.
+    Please click "Retry" to attempt the payment once more, or close your browser or cancel.
+
+    IF YOU HAVE ANY DIFFICULTIES CONTACT 131 727.
+       </h2>
+
+  </lightning-card>
+
+  <lightning-card>
+    <div class="slds-no-print">
+      <lightning-button label="Retry" onclick={Retry} variant="brand">
+      </lightning-button>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       
+        <lightning-button label="Print" onclick={handlePrint} variant="brand">
+      </lightning-button>
+    </div>
+  </lightning-card>
+</template>

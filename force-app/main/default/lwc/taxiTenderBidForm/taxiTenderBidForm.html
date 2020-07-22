@@ -1,0 +1,141 @@
+<!--
+  @File Name          : taxiTenderBidForm.html
+  @Description        : 
+  @Author             : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Group              : 
+  @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Last Modified On   : 6/5/2020, 3:19:53 PM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    12/5/2019   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+-->
+<template>
+  <div class="slds-form slds-form_stacked">
+    <template if:true={isTenderOpen}>
+      <lightning-layout pull-to-boundary="small" multiple-rows="true">
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <h4 class="slds-text-heading_small">
+            <strong
+              >2019/2020 Phase 2 Taxi Licence Tender Online Tender Submission
+              RfT Number: {tenderNumber}</strong
+            >
+          </h4>
+        </lightning-layout-item>
+
+        <lightning-layout-item flexibility="auto" padding="horizontal-small">
+          <div class="slds-no-print">
+            <c-tender-progress-indicator
+              current-step={currentStep}
+            ></c-tender-progress-indicator>
+          </div>
+        </lightning-layout-item>
+
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <template if:true={sectionIntro}>
+            <c-taxi-tender-bid-intro
+              oneventintronext={handleeventintronext}
+              applicationfee={applicationFee}
+              tenderperioddays={tenderperioddays}
+            ></c-taxi-tender-bid-intro>
+          </template>
+          <template if:true={enterbiddetails}>
+            <c-taxi-tender-bid-details
+              onbiddetailsnext={handlebiddetailsnext}
+              onbiddetailsback={handlebiddetailsback}
+              tenderbiddetailsobjfromparent={tenderbiddetailsobj}
+              getjoinholderfinalmap={joinholderfinalmap}
+              getjointholderreadonly={jointholderreadonly}
+              onjointholdercloseupdate={handlebiddetailsclose}
+              licensepaymentdays={licensepaymentdays}
+              makejointholdereditable
+            ></c-taxi-tender-bid-details>
+          </template>
+        </lightning-layout-item>
+
+        <template if:true={review}>
+          <lightning-layout-item
+            flexibility="auto"
+            padding="around-small"
+            size="12"
+          >
+            <c-taxi-tender-bid-details
+              onreviewback={handlereviewback}
+              onreviewsubmit={handlereviewsubmit}
+              tenderbiddetailsobjfromparent={tenderbiddetailsobj}
+              getjoinholderfinalmap={joinholderfinalmap}
+              getjointholderreadonly={jointholderreadonly}
+              tenderstartdate={tenderbidstartjustdate}
+              tenderenddate={tenderbidendjustdate}
+              applicationfee={applicationFee}
+              tenderstarttime={tenderstarttime}
+              tendercalculatedendtime={tendercalculatedendtime}
+              tenderperioddays={tenderperioddays}
+              onjointholdercloseupdate={handlebiddetailsclose}
+              makereadonly
+            ></c-taxi-tender-bid-details>
+          </lightning-layout-item>
+        </template>
+
+        <template if:true={processpaymentScreen}>
+          <lightning-layout-item
+            flexibility="auto"
+            padding="around-small"
+            size="12"
+          >
+            <c-taxi-tender-bid-payment
+              orderid={orderid}
+              tender-bid-amount={tenderbidamount}
+              tender-bid-no={tenderbidno}
+              ontriggerpaymentretry={handlePayment}
+            ></c-taxi-tender-bid-payment>
+          </lightning-layout-item>
+        </template>
+
+        <template if:true={complete}>
+          <lightning-layout-item
+            flexibility="auto"
+            padding="around-small"
+            size="12"
+          >
+            <c-taxi-tender-bid-complete
+              tenderbidid={tenderbidid}
+            ></c-taxi-tender-bid-complete>
+          </lightning-layout-item>
+        </template>
+      </lightning-layout>
+    </template>
+
+    <template if:false={isTenderOpen}>
+      <lightning-layout pull-to-boundary="small" multiple-rows="true">
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <h4 class="slds-text-heading_small">
+            <strong
+              >2019/2020 Phase 2 Taxi Licence Tender Online Tender Submission
+              RfT Number: {tenderNumber}</strong
+            >
+          </h4>
+        </lightning-layout-item>
+
+        <lightning-layout-item flexibility="auto" padding="horizontal-small">
+          <c-tendersubmissionperiod
+            tenderbidstartdate={tenderbidstartdate}
+            tenderbidenddate={tenderbidenddate}
+          >
+          </c-tendersubmissionperiod>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </div>
+</template>

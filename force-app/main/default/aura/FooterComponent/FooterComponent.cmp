@@ -1,0 +1,54 @@
+<!-- c:FooterComponent -->
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+ <!--   <div class="footerregion">
+        <div class="footerlinks">
+            
+        </div>
+        <div class="footerlogo">
+            <table align="center" class="footerTable">
+                <tr>
+                    <td>
+                        <a class="links" href="{!$Label.c.Community_Footer_Link_1_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_1_Label}</a>
+                    </td>
+                    <td>
+                        <a class="links" href="{!$Label.c.Community_Footer_Link_2_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_2_Label}</a>
+                    </td>
+                    <td>
+                        <a class="links" href="{!$Label.c.Community_Footer_Link_3_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_3_Label}</a>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                        <a class="links" href="{!$Label.c.Community_Footer_Link_4_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_4_Label}</a>
+                    </td>
+                    <td>
+                        <a class="links" href="{!$Label.c.Community_Footer_Link_5_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_5_Label}</a>
+                    </td>
+                </tr>
+            </table> -->
+            <!--
+            <img class="footerimage" src="{!$Resource.P2P_Footer_Logo}"/>
+			-->
+<!--        </div>
+    </div> -->
+
+    <div class="container slds-no-print">
+        <lightning:layout multipleRows="true" class="layout" >
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="4" padding="around-small">
+                <a class="links" href="{!$Label.c.Community_Footer_Link_1_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_1_Label}</a>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="4" padding="around-small">
+                <a class="links" href="{!$Label.c.Community_Footer_Link_2_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_2_Label}</a>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="4" padding="around-small">
+                <a class="links" href="{!$Label.c.Community_Footer_Link_3_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_3_Label}</a>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="4" padding="around-small">
+                <a class="links" href="{!$Label.c.Community_Footer_Link_4_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_4_Label}</a>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="4" padding="around-small">
+                <a class="links" href="{!$Label.c.Community_Footer_Link_5_Url}"  target="_blank">{!$Label.c.Community_Footer_Link_5_Label}</a>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

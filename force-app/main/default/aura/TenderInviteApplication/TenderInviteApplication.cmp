@@ -1,0 +1,82 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global"  controller="TenderTopBidSelectionController">
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+     <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+     <aura:attribute name="isModalError" type="boolean" default="false"/>
+    
+    <aura:attribute name="isBidupdatesuccess" type="boolean" default="false"/>
+    <aura:attribute name="InviteAlreadySent" type="boolean" default="false"/>
+    <aura:attribute name="NotOfferedYet" type="boolean" default="false"/>
+    <aura:attribute name="TenderNotClosed" type="boolean" default="false"/>
+    <aura:attribute name="InviteReservedTenderBids" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="getBidOfferedCount" type="string" default="0"/>
+    <aura:attribute name="isBidOffered" type="boolean" default="false"/>
+    
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+        
+          <aura:if isTrue="{!v.TenderNotClosed}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Please check the tender status, it is not closed yet! 
+                            </b>
+                        </p>
+                    </div>
+                      </aura:if> 
+
+                    <aura:if isTrue="{!v.isBidupdatesuccess}">
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b> Successfully Invited!
+                            </b>
+                        </p>
+                    </div>
+                    
+                    </aura:if> 
+        
+         <aura:if isTrue="{!v.InviteReservedTenderBids}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Successfully Invited Reserved Bids!  
+                            </b>
+                        </p>
+                    </div>
+                      </aura:if> 
+        
+        
+        <aura:if isTrue="{!v.InviteAlreadySent}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>INVITE ALREADY SENT! !  
+                            </b>
+                        </p>
+                    </div>
+                      </aura:if> 
+                                        
+        
+         <aura:if isTrue="{!v.NotOfferedYet}">
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b> No Topper bidders Identified, Please make the bids offered in order to Invite!
+                            </b>
+                        </p>
+                    </div>
+                   
+                    </aura:if> 
+        
+                   
+            
+        
+        
+        </aura:if>
+    
+    
+     <aura:if isTrue="{!v.isModalError}">
+
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="color:red">
+                        <p><b> Something Went Wrong, Please Contact System Admin!
+                            </b>
+                        </p>
+                    </div>
+                    
+                                        
+                   
+        </aura:if>
+	
+</aura:component>

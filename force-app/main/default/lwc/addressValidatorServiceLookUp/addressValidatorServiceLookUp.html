@@ -1,0 +1,39 @@
+<template>
+        <!-- Input for search term -->
+        <c-address-validator-service-input
+          label={label}
+          onchange={handleSearchTerm}
+          onchangemanualaddress={handleManualAddress}
+          value={lastSearchValue}
+          mailingstreet ={mailingstreet}
+          mailingcity={mailingcity}
+          mailingstate={mailingstate}
+          mailingzipcode={mailingzipcode}
+          addressreadonly={addressreadonly}
+          
+        >
+        </c-address-validator-service-input>
+         
+        <template if:true={searchboxhide}>
+        <div
+          id="listbox-id-2"
+          class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+          role="listbox"
+        >
+          <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+            <template
+              if:true={addresSearchResult}
+              for:each={addresSearchResult}
+              for:item="singleRec"
+            >
+              <c-address-validator-service-result
+                icon-name={iconName}
+                record={singleRec}
+                onselection={handleRecordSelect}
+                key={singleRec}
+              ></c-address-validator-service-result>
+            </template>
+          </ul>
+        </div>
+</template>
+</template>

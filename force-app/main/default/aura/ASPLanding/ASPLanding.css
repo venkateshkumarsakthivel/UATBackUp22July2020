@@ -1,0 +1,16 @@
+.THIS .Container{
+    width: 1170px;
+    display: inline-flex;
+    padding-left: 324px;
+}
+
+.THIS .row{
+    padding-left:4px;
+    padding-right:4px;
+}
+
+.THIS .info{
+    background-color:#003577;
+    color:#FFF;
+    text-align:justify;
+}

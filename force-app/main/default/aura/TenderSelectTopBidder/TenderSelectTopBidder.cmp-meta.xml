@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>This aura component is placed on a quick action button that calculate the top bidders based on the no of top bidders field on the Tender Object and moves all the top bidders to &quot;Offered&quot;</description>
+</AuraDefinitionBundle>

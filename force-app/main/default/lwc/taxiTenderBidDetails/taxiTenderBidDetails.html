@@ -1,0 +1,811 @@
+<!--
+  @File Name          : taxiTenderBidDetails.html
+  @Description        : 
+  @Author             :Venkatesh Kumar Sakthivel
+  @Group              : 
+  @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Last Modified On   : 6/5/2020, 3:21:14 PM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    12/5/2019   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+-->
+<template>
+  <lightning-layout
+    vertical-align="center"
+    multiple-rows="true"
+    class="slds-scrollable"
+  >
+    <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+      <lightning-card title="" variant="base">
+        <h2 class="slds-card__header-title">
+          <span>Entity Details</span>
+        </h2>
+        <br />
+
+        <div style="font-color: blue;">
+          <div class="slds-grid slds-gutters slds-grid_vertical">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+              <lightning-combobox
+                label=" Entity Type"
+                name="entityType"
+                value={entityType}
+                placeholder="Please Select"
+                options={entityTypes}
+                onchange={handleChange}
+                required
+                read-only={makereadonly}
+                class="getcolor"
+              >
+              </lightning-combobox>
+            </div>
+
+            <div class="slds-col" if:true={isJointHolder}>
+              <template if:false={makereadonly}>
+                <lightning-radio-group
+                  label="Is the Primary Joint Holder"
+                  name="primaryJointHolder"
+                  options={jointHolderTypes}
+                  value={primaryJointHolder}
+                  onchange={handleChange}
+                  required
+                  type="radio"
+                  class="getcolor"
+                >
+                </lightning-radio-group>
+              </template>
+              <template if:true={makereadonly}>
+                <lightning-input
+                  label="Is the Primary Joint Holder"
+                  value={primaryJointHolder}
+                  data-id="isPrimaryJH"
+                  class="getcolor"
+                  required
+                  read-only
+                >
+                </lightning-input>
+              </template>
+            </div>
+          </div>
+        </div>
+      </lightning-card>
+    </lightning-layout-item>
+
+    <lightning-layout-item
+      if:true={isIndividual}
+      flexibility="auto"
+      padding="around-small"
+      size="12"
+    >
+      <lightning-card title="" variant="base">
+        <h2 class="slds-card__header-title">
+          <span>Entity Details - Individual</span>
+        </h2>
+        <br />
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="First Name"
+              name="indFirstName"
+              value={indFirstName}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Other Names"
+              name="indOtherNames"
+              value={indOtherNames}
+              onchange={handleChange}
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Last Name"
+              name="indLastName"
+              value={indLastName}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              type="date"
+              label="Date of Birth"
+              name="indDOB"
+              value={indDOB}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Driver Licence Number"
+              name="indDLNumber"
+              value={indDLNumber}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <template if:true={dlStatesOfIssueValues.data}>
+              <lightning-combobox
+                name="indDLStateOfIssue"
+                label="State of Issue"
+                value={indDLStateOfIssue}
+                placeholder="Please Select"
+                options={dlStatesOfIssueValues.data.values}
+                onchange={handleChange}
+                required
+                read-only={makereadonly}
+                class="validValue getcolor"
+              >
+              </lightning-combobox>
+            </template>
+          </div>
+        </div>
+      </lightning-card>
+    </lightning-layout-item>
+
+    <lightning-layout-item
+      if:true={isCorporation}
+      flexibility="auto"
+      padding="around-small"
+      size="12"
+    >
+      <lightning-card title="" variant="base">
+        {validationMessage}
+        <h2 class="slds-card__header-title">
+          <span>Entity Details - Corporation</span>
+        </h2>
+        <br />
+
+        <div class="slds-grid slds-wrap">
+          <template if:true={isACNRequired}>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+              <lightning-input
+                label="Corporation ACN"
+                name="corpACN"
+                value={corpACN}
+                onchange={handleChange}
+                read-only={makereadonly}
+                required
+                class="corporatenamevalidation getcolor"
+              >
+              </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+              <label class="slds-form-element__label" for="text-input-id-1">
+                <abbr class="slds-required" title="required">* </abbr
+                >Corporation Name</label
+              >
+              <div class="slds-form-element__static getcolor">
+                {corpName}
+              </div>
+            </div>
+          </template>
+
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Nominated Contact First Name"
+              name="nomConFirstName"
+              value={nomConFirstName}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Nominated Contact Other names"
+              name="nomConOtherNames"
+              value={nomConOtherNames}
+              onchange={handleChange}
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Nominated Contact Last Name"
+              name="nomConLastName"
+              value={nomConLastName}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>
+          <!--  <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Nominated Contact Position Title"
+              name="nomContPosTitle"
+              value={nomContPosTitle}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              pattern="^([^0-9]*)$"
+              message-when-pattern-mismatch="Numbers are not allowed"
+            >
+            </lightning-input>
+          </div>-->
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              type="date"
+              label="Nominated Contact Date of Birth"
+              name="nomContDOB"
+              value={nomContDOB}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-input
+              label="Nominated Contact Driver Licence Number"
+              name="corpDLNumber"
+              value={corpDLNumber}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <template if:true={dlStatesOfIssueValues.data}>
+              <lightning-combobox
+                label="State of Issue"
+                name="corpDLStateOfIssue"
+                value={corpDLStateOfIssue}
+                placeholder="Please Select"
+                options={dlStatesOfIssueValues.data.values}
+                onchange={handleChange}
+                required
+                read-only={makereadonly}
+                class="validValue getcolor"
+              >
+              </lightning-combobox>
+            </template>
+          </div>
+        </div>
+      </lightning-card>
+    </lightning-layout-item>
+
+    <template if:false={makereadonly}>
+      <template if:true={isJointHolder}>
+        <lightning-layout-item
+          if:true={jointholderbutton}
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <div class="slds-grid slds-grid_vertical">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+              <lightning-button
+                label="Add Joint Holders Details"
+                icon-name="utility:add"
+                icon-position="left"
+                onclick={addMoreJointHolders}
+              ></lightning-button>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+              <template
+                for:each={mapOfValuesJointHolder}
+                for:item="jointHolder"
+              >
+                <c-taxi-tender-joint-holder-list
+                  key={jointHolder.key}
+                  joint-holder={jointHolder.key}
+                  getjoinholderinfo={jointholderdetailsobj}
+                  onjointholderdetailsave={handlejoinholdersave}
+                  get-joint-holdervalues={jointHolder.value}
+                  onjointholderclose={handlejoinholderclose}
+                ></c-taxi-tender-joint-holder-list>
+              </template>
+            </div>
+          </div>
+        </lightning-layout-item>
+      </template>
+    </template>
+
+    <template if:true={makereadonly}>
+      <lightning-layout-item
+        flexibility="auto"
+        padding="around-small"
+        size="12"
+      >
+        <div class="slds-grid slds-grid_vertical">
+          <div class="slds-col slds-size_1-of-1"></div>
+
+          <template for:each={mapOfValuesJointHolder} for:item="jointHolder">
+            <c-taxi-tender-joint-holder-list
+              key={jointHolder.key}
+              joint-holder={jointHolder.key}
+              get-joint-holdervalues={jointHolder.value}
+              makereadonly
+            ></c-taxi-tender-joint-holder-list>
+          </template>
+        </div>
+      </lightning-layout-item>
+    </template>
+
+    <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+      <lightning-card title="" variant="base">
+        <h2 class="slds-card__header-title">
+          <span>Contact Details</span>
+        </h2>
+        <br />
+
+        <div class="slds-grid slds-gutters slds-wrap">
+          <div class="slds-col slds-size_1-of-1">
+            <template if:false={makereadonly}>
+              <lightning-radio-group
+                label="Preferred Contact Method"
+                name="prefContactMethod"
+                options={prefContactMethodValues}
+                value={prefContactMethod}
+                onchange={handleChange}
+                required
+                type="radio"
+                class="validValue getcolor"
+              >
+              </lightning-radio-group>
+            </template>
+            <template if:true={makereadonly}>
+              <lightning-input
+                label="Preferred Contact Method"
+                value={prefContactMethod}
+                data-id="conName"
+                class="getcolor"
+                required
+                read-only
+              >
+              </lightning-input>
+            </template>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+            <lightning-input
+              label="Contact Email"
+              name="contactEmail"
+              value={contactEmail}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              type="email"
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+            <lightning-input
+              label="Business Hours Phone"
+              name="businessHoursPhone"
+              value={businessHoursPhone}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+              type="tel"
+              pattern="^[0-9]*$"
+              message-when-pattern-mismatch="Numbers only allowed"
+            >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1">
+            <c-address-validator-service-look-up
+              onaddressselection={handleAddressSelection}
+              onaddressselectionmanual={handleAddressSelectionManual}
+              mailingaddress={MailingAddress}
+              mailingstreet={MailingStreet}
+              mailingcity={MailingCity}
+              mailingstate={MailingState}
+              mailingzipcode={MailingPostalCode}
+              mailingcounty={MailingCountry}
+              addressreadonly={makereadonly}
+            >
+            </c-address-validator-service-look-up>
+          </div>
+        </div>
+      </lightning-card>
+
+      <!--   <lightning-card title="Contact Address" variant="base">
+        <div class="slds-grid slds-gutters slds-wrap">
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+             <lightning-input
+              label="Contact Address"
+              name="contactAddress"
+              value={contactAddress}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+            >
+            </lightning-input> 
+
+            <lightning-input
+              label="Mailing Street"
+              name="MailingStreet"
+              value={MailingStreet}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue"
+            ></lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+            <lightning-input
+              label="Mailing City"
+              name="MailingCity"
+              value={MailingCity}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue"
+            ></lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+            <template if:true={dlStatesOfIssueValues.data}>
+              <lightning-combobox
+                name="MailingState"
+                label="Mailing State"
+                value={MailingState}
+                placeholder="Please Select"
+                options={dlStatesOfIssueValues.data.values}
+                onchange={handleChange}
+                required
+                read-only={makereadonly}
+                class="validValue"
+              >
+              </lightning-combobox>
+            </template>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+            <lightning-input
+              label="Mailing County"
+              name="MailingCountry"
+              value={MailingCountry}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue"
+            ></lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-2 slds-medium-size_6-of-12">
+            <lightning-input
+              label="Mailing Postal Code"
+              name="MailingPostalCode"
+              value={MailingPostalCode}
+              onchange={handleChange}
+              required
+              read-only={makereadonly}
+              class="validValue"
+            ></lightning-input>
+          </div>
+        </div>
+      </lightning-card> -->
+    </lightning-layout-item>
+
+    <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+      <lightning-card title="" variant="base">
+        <h2 class="slds-card__header-title">
+          <span>Tender Bid</span>
+        </h2>
+        <br />
+        <div class="slds-grid slds-gutters slds-grid_vertical">
+          <div class="slds-col slds-size_1-of-1">
+            <lightning-input
+              type="number"
+              label="This is the amount in Australian Dollars that you are offering to pay for the initial term of the licence and for each successive renewal."
+              name="tenderBidAmount"
+              value={tenderBidAmount}
+              onchange={handleChange}
+              formatter="currency"
+              placeholder="Enter  amount here..."
+              required
+              read-only={makereadonly}
+              class="validValue getcolor"
+            >
+            </lightning-input>
+          </div>
+        </div>
+      </lightning-card>
+    </lightning-layout-item>
+  </lightning-layout>
+
+  <template if:true={makereadonly}>
+    <lightning-layout>
+      <lightning-layout-item
+        flexibility="auto"
+        padding="around-small"
+        size="12"
+      >
+        <lightning-card class="slds-text-heading_small" title="" variant="base">
+          <h2 class="slds-card__header-title">
+            <span>Privacy Statement and Declaration</span>
+          </h2>
+          <br />
+
+          <div
+            class="slds-grid slds-gutters slds-grid_vertical"
+            style="font-size: 12px;"
+          >
+            <div class="slds-col slds-size_1-of-1">
+              <P>
+                The Point to Point Transport Commissioner is committed to
+                protecting the privacy of your personal information in
+                accordance with the Privacy and Personal Information Protection
+                Act 1998 (NSW) and the Health Records and Information Privacy
+                Act 2002 (NSW).<br />
+                <br />
+                The Point to Point Transport Commissioner must collect this
+                information under Part 4 of the Point to Point Transport (Taxis
+                and Hire Vehicles) Act 2016 and Part 4 of the Point to Point
+                Transport (Taxis and Hire Vehicles) Regulation 2017. Information
+                supplied on this form will be used by officers of the Point to
+                Point Transport Commission to assess your application for a taxi
+                licence. If you do not provide this information your application
+                for a taxi licence cannot proceed.<br />
+                <br />
+                Information collected by the Point to Point Transport
+                Commissioner may be disclosed to third parties for the purposes
+                of confirming information provided in this application. These
+                agencies include Revenue NSW, the Australian Securities and
+                Investments Commission, the NSW Police Force and Roads and
+                Maritime Services. Otherwise, we will not disclose your personal
+                information without your consent unless authorised or required
+                by law.<br />
+                <br />
+                Please note that an alphabetical list of all successful
+                tenderers will be published as required by NSW Government
+                disclosure on the Point to Point Transport Commissioner’s
+                website and the NSW eTendering website. <br />
+                <br />
+                For further information relating to the disclosure of government
+                information held by the Point to Point Transport Commissioner,
+                contact: <br />
+                <br />
+              </P>
+              <h2 class="slds-card__header-title">
+                <span>Information and Privacy Unit</span>
+              </h2>
+              <p>
+                Transport for NSW <br />PO Box K659 Haymarket NSW 1240
+                <br />Email: information@transport.nsw.gov.au
+              </p>
+            </div>
+          </div>
+
+          <br />
+          <h2 class="slds-card__header-title">
+            <span>Important information</span>
+          </h2>
+          <br />
+          <ul>
+            <div class="slds-list_dotted" style="font-size: 12px;">
+              <li>
+                The tender period is only open for {tenderperioddays} days from
+                {tenderstarttime} AEDT on {tenderstartdate} until
+                {tendercalculatedendtime} on {tenderenddate} .
+              </li>
+              <li>
+                Application bids will only be accepted if submitted online
+                through the Tender Platform, and the application fee is paid.
+              </li>
+              <li>
+                The ${applicationfee} AUD application fee to lodge the
+                application bid is non-refundable.
+              </li>
+              <li>
+                If applying for more than one taxi licence, separate
+                applications must be submitted with the non-refundable fee of
+                ${applicationfee} AUD paid for each.
+              </li>
+              <li>
+                If your bid is successful and you are offered a licence, you
+                must accept the offer within {tenderperioddays} days and pay the
+                amount you bid for the licence in full. This amount cannot be
+                paid in instalments.
+              </li>
+            </div>
+          </ul>
+          <br />
+
+          <h2 class="slds-card__header-title">
+            <span>Declaration</span>
+          </h2>
+
+          <div style="font-size: 12px;">
+            <p>
+              <br />
+
+              It is a serious criminal offence to make a false or misleading
+              statement in connection with an application for a taxi licence.
+            </p>
+          </div>
+
+          <br />
+
+          <div
+            class="slds-grid slds-gutters slds-grid_vertical"
+            style="font-size: 20px;"
+          >
+            <div class="slds-col slds-size_1-of-1">
+              <lightning-input
+                type="checkbox"
+                label="I declare that information provided in this application is true and correct."
+                name="InformationProvidedCheck"
+                value={InformationProvidedCheck}
+                required
+                class="validValue getcolorsize"
+              >
+              </lightning-input>
+              <lightning-input
+                type="checkbox"
+                label="I declare that I have understood the Privacy Statement."
+                name="PrivacyStatementCheck"
+                value={PrivacyStatementCheck}
+                required
+                class="validValue getcolorsize"
+              >
+              </lightning-input>
+              <lightning-input
+                type="checkbox"
+                label="I declare that I have read and understood the Terms and Conditions of the Tender at Attachment 1 of the Tender Information Pack."
+                name="TenderInformationCheck"
+                value={TenderInformationCheck}
+                required
+                class="validValue getcolorsize"
+              >
+              </lightning-input>
+            </div>
+          </div>
+        </lightning-card>
+      </lightning-layout-item>
+    </lightning-layout>
+  </template>
+
+  <template if:false={makereadonly}>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" padding="horizontal-small">
+        <lightning-button
+          label="Previous"
+          icon-name="utility:chevronleft"
+          onclick={handlePrevious}
+          variant="brand"
+        >
+        </lightning-button>
+      </lightning-layout-item>
+
+      <lightning-layout-item flexibility="grow"></lightning-layout-item>
+      <lightning-layout-item>
+        <lightning-button
+          label="Next"
+          icon-name="utility:chevronright"
+          icon-position="right"
+          onclick={callConfirmationModal}
+          variant="brand"
+        ></lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+  </template>
+
+  <!-- buttons displayed on the review page-->
+  <template if:true={makereadonly}>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" padding="horizontal-small">
+        <lightning-button
+          label="Previous"
+          icon-name="utility:chevronleft"
+          onclick={handleReviewPrevious}
+          variant="brand"
+        >
+        </lightning-button>
+      </lightning-layout-item>
+
+      <lightning-layout-item flexibility="grow"></lightning-layout-item>
+
+      <lightning-layout-item>
+        <lightning-button
+          label="Make Payment"
+          icon-name="utility:chevronright"
+          icon-position="right"
+          onclick={handleReviewSubmit}
+          variant="brand"
+        ></lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+  </template>
+
+  <template if:true={openconfiramtionmodal}>
+    <div class="demo-only" style="height: 640px;">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <button
+              class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+              title="Close"
+              onclick={modalClickNo}
+            >
+              <lightning-icon icon-name="utility:close" size="medium">
+              </lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2
+              id="modal-heading-01"
+              class="slds-text-heading_medium slds-hyphenate"
+            >
+              Payment Warning
+            </h2>
+          </header>
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+          >
+            <p>
+              If your bid is successful, you must pay the full Tender Bid amount
+              of ${tenderBidAmount} within {licensepaymentdays} days. <br />Do
+              you agree, Yes/No ?
+            </p>
+          </div>
+          <footer class="slds-modal__footer">
+            <lightning-button
+              label="Yes"
+              variant="brand"
+              onclick={modalClickYes}
+            ></lightning-button
+            >&nbsp;&nbsp;&nbsp;&nbsp;
+            <lightning-button
+              label="No"
+              variant="neutral"
+              onclick={modalClickNo}
+            ></lightning-button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </template>
+</template>

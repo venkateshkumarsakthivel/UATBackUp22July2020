@@ -1,0 +1,81 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global"  controller="TenderTopBidSelectionController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+     <aura:attribute name="isModalError" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="isBidupdatesuccess" type="boolean" default="false"/>
+    <aura:attribute name="isBidNoBids" type="boolean" default="false"/>
+    <aura:attribute name="isTenderNotClosed" type="boolean" default="false"/>
+      <aura:attribute name="isBidsAlreadyOffered" type="boolean" default="false"/>
+     <aura:attribute name="isReserverdBidsuccess" type="boolean" default="false"/>
+    
+    
+    
+    <aura:attribute name="getBidOfferedCount" type="string" default="0"/>
+    
+   
+     <aura:if isTrue="{!v.isModalOpen}">
+
+         <aura:if isTrue="{!v.isBidNoBids}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>No Bids found or something went wrong!
+                            </b>
+                        </p>
+                    </div>
+                 </aura:if> 
+         
+         <aura:if isTrue="{!v.isTenderNotClosed}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Tender is not yet Closed!
+                            </b>
+                        </p>
+                    </div>
+                 </aura:if>     
+         
+        
+          <aura:if isTrue="{!v.isBidsAlreadyOffered}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="color:red">
+                        <p><b>BIDS ARE ALREADY OFFERED!
+                            </b>
+                        </p>
+                    </div>
+                 </aura:if>  
+         
+         
+          <aura:if isTrue="{!v.isReserverdBidsuccess}">
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                        <p><b>Reserved Tender Bids are made offered!
+                            </b>
+                        </p>
+                    </div>
+                 </aura:if>
+       
+          <aura:if isTrue="{!v.isBidupdatesuccess}">
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>{!v.getBidOfferedCount} Bids are made Offered!
+                            </b>
+                        </p>
+                    </div>
+                    
+                    </aura:if> 
+         
+        </aura:if>
+    
+    
+    
+    
+     <aura:if isTrue="{!v.isModalError}">
+
+                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="color:red">
+                        <p><b> SOMETHING WENT WRONG PLEASE CONTACT SYSTEM ADMIN!
+                            </b>
+                        </p>
+                    </div>
+                    
+                                        
+                   
+        </aura:if>
+    
+	
+</aura:component>

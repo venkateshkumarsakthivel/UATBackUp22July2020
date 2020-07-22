@@ -1,0 +1,106 @@
+<template>
+
+<template if:true={addressreadonly}>
+       <lightning-input
+      name="enter-search"
+      value={value}
+      label= "Address"
+      read-only={addressreadonly}
+      class="getcolor"
+      required
+    >
+    </lightning-input>
+ </template>
+
+
+<template if:false={addressreadonly}>
+
+  <div>
+            <template if:true={addressservice}>
+               <a href={url} onclick={handleCanfindAddressClick}>Can't Find Address</a>
+              <lightning-input
+                  name="enter-search"
+                  onchange={handleChange}
+                  type="search"
+                  value={value}
+                  placeholder="Search..."
+                  class="slds-input slds-has-focus validValue getcolor"
+                  label= "Address"
+                  required>
+                </lightning-input>
+            </template>
+
+            <template if:false={addressservice}>
+              <a href={url} onclick={handlebacktoaddresssearch}>back to Address Search</a>
+
+                <div class="slds-grid slds-gutters slds-wrap">
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+                      <lightning-input
+                        label="Mailing Street"
+                        name="MailingStreet"
+                        value={mailingstreet}
+                        onchange={handlecantfindaddress}
+                        required
+                        class="slds-input slds-has-focus validValue getcolor"
+                      ></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+                    <lightning-input
+                        label="Mailing City"
+                        name="MailingCity"
+                        value={mailingcity}
+                        onchange={handlecantfindaddress}
+                        required
+                        class="slds-input slds-has-focus validValue getcolor"
+                      ></lightning-input>
+                    </div>
+
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+                      <template if:true={dlStatesOfIssueValues.data}>
+                        <lightning-combobox
+                          name="MailingState"
+                          label="Mailing State"
+                          value={mailingstate}
+                          placeholder="Please Select"
+                          options={dlStatesOfIssueValues.data.values}
+                          onchange={handlecantfindaddress}
+                          required
+                          read-only={makereadonly}
+                          class="slds-input slds-has-focus validValue getcolor"
+                        >
+                        </lightning-combobox>
+                      </template>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-medium-size_6-of-12">
+                      <lightning-input
+                        label="Mailing Postal Code"
+                        name="MailingPostalCode"
+                        value={mailingzipcode}
+                        onchange={handlecantfindaddress}
+                        required
+                        class="slds-input slds-has-focus validValue getcolor"
+                      ></lightning-input>
+                    </div>
+
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">
+                      <lightning-input
+                        label="Mailing County"
+                        name="MailingCountry"
+                        value={mailingcounty}
+                        required
+                        read-only
+                        class="slds-input slds-has-focus validValue getcolor"
+                      ></lightning-input>
+                    </div>
+
+                  </div>
+            </template>
+
+          </div>
+  </template>
+
+
+</template>

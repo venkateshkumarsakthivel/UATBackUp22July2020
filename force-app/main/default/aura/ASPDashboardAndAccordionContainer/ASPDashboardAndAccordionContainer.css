@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Gotham-Book';
+    src: url(/industryportal/resource/GothamBookRegular);
+}
+.THIS {
+    
+    font-family: 'Gotham-Book' !important;
+}
+
+.THIS .info{
+    background-color:#003577;
+    color:#FFF;
+    text-align:justify;
+}

@@ -1,0 +1,108 @@
+<!--
+  @File Name          : taxiTenderBidIntro.html
+  @Description        : 
+  @Author             : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Group              : 
+  @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Last Modified On   : 6/30/2020, 4:06:03 PM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    6/5/2020   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+-->
+<template>
+  <article class="slds-card">
+    <div class="slds-grid slds-grid_vertical">
+      <div class="slds-col">
+        <img src={p2pTileUrl} alt="P2P Taxi" />
+      </div>
+    </div>
+
+    <div class="slds-card__header slds-grid">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title">
+            <span>IMPORTANT:</span>
+          </h2>
+        </div>
+      </header>
+    </div>
+    <div
+      class="slds-card__body slds-card__body_inner slds-scrollable"
+      style="height: 19rem;"
+    >
+      <ol class="slds-list_ordered">
+        <li>
+          READ THE TENDER INFORMATION PACK BEFORE PROCEEDING<br />
+          <div class="slds-text-color_weak">
+            Tender Information Pack
+          </div>
+          <div class="icon-container">
+            <div class="slds-icon_large">
+              <a
+                href={taxiTenderDetailsUrl}
+                download="Tender Information Pack"
+                title="Tender Information Pack"
+              >
+                <lightning-icon
+                  icon-name="doctype:pdf"
+                  alternative-text="Tender Information Pack"
+                >
+                </lightning-icon>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li>
+          YOU WILL NEED:
+          <ul class="slds-list_dotted">
+            <li>
+              A current VISA or Mastercard to pay the
+              <strong> ${applicationfee} </strong> (GST Exempt) application fee
+              for each tender submitted
+            </li>
+            <li>
+              You must supply your (your company’s) name and contact details
+            </li>
+            <li>
+              Companies and Joint Holders (Partnerships) must nominate at least
+              one contact who is authorised to deal on behalf of the body
+              corporate
+            </li>
+            <li>
+              The tender price you wish to submit. This is the annual rental of
+              a taxi licence in Australian Dollars that you will need to pay
+              within <strong> {tenderperioddays} days </strong> of receiving an
+              offer and for each annual renewal before the licence is issued
+            </li>
+            <li>
+              A tenderer can submit multiple bids but
+              <ol class="slds-list_ordered">
+                <li>Submit each bid as a separate application</li>
+                <li>
+                  must accept their highest winning bid if offered for issue
+                  before any lower bids will be considered compliant
+                </li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <br />
+      <h1 class="slds-text-heading_small">
+        <span>IF YOU HAVE ANY DIFFICULTIES CONTACT 131 727</span>
+      </h1>
+    </div>
+  </article>
+  <lightning-layout>
+    <lightning-layout-item flexibility="grow"></lightning-layout-item>
+    <lightning-layout-item>
+      <lightning-button
+        label="Next"
+        icon-name="utility:chevronright"
+        icon-position="right"
+        onclick={handleNext}
+        variant="brand"
+      ></lightning-button>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>
